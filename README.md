@@ -34,10 +34,11 @@ Start the environment (e.g Aroma) and the backend should load the plugin.
 
 For building you need:
 
-- [wups](https://github.com/Maschell/WiiUPluginSystem)
 - [wut](https://github.com/devkitpro/wut)
+- [wups](https://github.com/Maschell/WiiUPluginSystem)
+- [libnotifications](https://github.com/wiiu-env/libnotifications)
 
-Install them (in this order) according to their README's. Don't forget the dependencies of the libs itself.
+Install them according to their README's. Don't forget the dependencies of the libs itself.
 
 Then you should be able to compile via `make` (with no logging) or `make DEBUG=1` (with logging).
 
