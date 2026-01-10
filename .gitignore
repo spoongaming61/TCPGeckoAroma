@@ -1,5 +1,6 @@
-/.vscode
-/build
-/library
+.vscode/
+.idea/
+build/
+library/
 TCPGecko.wps
 TCPGecko.elf

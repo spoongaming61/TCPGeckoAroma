@@ -1,4 +1,4 @@
-#include <thread>
+#pragma once
 #include <coreinit/thread.h>
 
 OSThread* GetMainThread();

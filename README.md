@@ -19,8 +19,7 @@ The plugin is accessible with a TCP socket (hence, the name) at port 7332 and al
 
 * `call -a (address: 0xXXXXXXXX)`: branches to an address interpreted as assembly.
 
-* `drawtext -text (quoted text: "example") -r (value: 0xFF) -g (value: 0xFF) -b (value: 0xFF) -a (value: 0xFF)` : displays text in the top left of the screen with the specified colors.
- 
+* `shownotification -text (quoted text: "example") -duration (seconds)` : Displays an info notification for the specified amount of time.
 
 ## Installation
 
@@ -48,8 +47,8 @@ Then you should be able to compile via `make` (with no logging) or `make DEBUG=1
 
 Building via `make` only logs errors (via OSReport). To enable logging via the [LoggingModule](https://github.com/wiiu-env/LoggingModule) set `DEBUG` to `1` or `VERBOSE`.
 
-`make` Logs errors only (via OSReport).  
-`make DEBUG=1` Enables information and error logging via [LoggingModule](https://github.com/wiiu-env/LoggingModule).  
+`make` Logs errors only (via OSReport).
+`make DEBUG=1` Enables information and error logging via [LoggingModule](https://github.com/wiiu-env/LoggingModule).
 `make DEBUG=VERBOSE` Enables verbose information and error logging via [LoggingModule](https://github.com/wiiu-env/LoggingModule).
 
 If the [LoggingModule](https://github.com/wiiu-env/LoggingModule) is not present, it'll fallback to UDP (Port 4405) and [CafeOS](https://github.com/wiiu-env/USBSerialLoggingModule) logging.
@@ -62,7 +61,7 @@ It's possible to use a docker image for building. This way you don't need anythi
 # Build docker image (only needed once)
 docker build . -t example-plugin-builder
 
-# make 
+# make
 docker run -it --rm -v ${PWD}:/project example-plugin-builder make DEBUG=1
 
 # make clean
