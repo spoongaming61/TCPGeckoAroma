@@ -2,6 +2,8 @@
 #include <malloc.h>
 #include <wups.h>
 #include <wups/config_api.h>
+#include <wups/config/WUPSConfigItemStub.h>
+#include <nn/ac.h>
 #include "TCPGecko.h"
 
 /**
@@ -16,7 +18,26 @@ WUPS_USE_WUT_DEVOPTAB();                // Use the wut devoptabs
 WUPS_USE_STORAGE("tcpgecko"); // Unique id for the storage api
 
 WUPSConfigAPICallbackStatus ConfigMenuOpenedCallback(WUPSConfigCategoryHandle rootHandle) {
-    //maybe add something to the config menu from aroma in the future?
+    auto root = WUPSConfigCategory(rootHandle);
+
+    uint32_t hostIpAddress = 0;
+    nn::ac::GetAssignedAddress(&hostIpAddress);
+
+    char ipAddr[50];
+    if (hostIpAddress != 0) {
+        snprintf (ipAddr,
+            50,
+            "Console IP: %u.%u.%u.%u",
+            (hostIpAddress >> 24) & 0xFF,
+            (hostIpAddress >> 16) & 0xFF,
+            (hostIpAddress >> 8) & 0xFF,
+            (hostIpAddress >> 0) & 0xFF
+            );
+    } else {
+        snprintf(ipAddr, sizeof (ipAddr), "The console is not connected to a network.");
+    }
+
+    root.add(WUPSConfigItemStub::Create (ipAddr));
     return WUPSCONFIG_API_CALLBACK_RESULT_SUCCESS;
 }
 
@@ -36,6 +57,9 @@ static void thread_deallocator(OSThread *thread, void *stack) {
 }
 
 ON_APPLICATION_START() {
+    WUPSConfigAPIOptionsV1 configOptions = {.name = "TCPGecko"};
+    WUPSConfigAPI_Init(configOptions, ConfigMenuOpenedCallback, ConfigMenuClosedCallback);
+
     ct = OSGetCurrentThread();
     stopSocket(false);
 
